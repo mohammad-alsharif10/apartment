@@ -38,7 +38,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .build();
     }
 
-    public String username() {
+    public User loggedInUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username;
 
@@ -47,6 +47,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         } else {
             username = principal.toString();
         }
-        return username;
+        return userRepository.findByUsername(username).orElse(null);
     }
 }

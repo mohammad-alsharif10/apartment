@@ -19,8 +19,8 @@ public class ApartmentController {
     private final ApartmentService apartmentService;
 
     @RequestMapping(path = "/apartment-list", method = RequestMethod.GET)
-    public ResponseEntity<PageResult<Long, ApartmentDto>> listAll(@RequestParam("page") int page,
-                                                                  @RequestParam("size") int size,
+    public ResponseEntity<PageResult<Long, ApartmentDto>> listAll(@RequestParam("page") String page,
+                                                                  @RequestParam("size") String size,
                                                                   @RequestParam(required = false, value = "sort") String sort) {
 
         return apartmentService.findAll(page, size, sort);
@@ -42,7 +42,6 @@ public class ApartmentController {
             @RequestParam(value = "images") MultipartFile[] images,
             @RequestParam(name = "apartment") String apartmentDto) {
         return apartmentService.postApartment(images, apartmentDto);
-//        return apartmentService.postApartment(images, apartmentDto);
     }
 }
 

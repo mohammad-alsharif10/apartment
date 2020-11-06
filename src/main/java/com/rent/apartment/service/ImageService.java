@@ -3,11 +3,12 @@ package com.rent.apartment.service;
 
 import com.rent.apartment.database.BaseRepository;
 import com.rent.apartment.database.ImageRepository;
+import com.rent.apartment.dto.ApartmentDto;
 import com.rent.apartment.dto.ImageDto;
 import com.rent.apartment.mapper.BaseMapper;
 import com.rent.apartment.mapper.ImageMapper;
-import com.rent.apartment.model.Apartment;
 import com.rent.apartment.model.Image;
+import com.rent.apartment.model.User;
 import com.rent.apartment.utils.Constants;
 import com.rent.apartment.utils.SqlQuery;
 import lombok.AllArgsConstructor;
@@ -53,26 +54,26 @@ public class ImageService extends BaseService<Long, Image, ImageDto> {
                 .append(File.separator)
                 .append("profileImages")
                 .append(File.separator)
-                .append(userDetailsService.username());
+                .append(userDetailsService.loggedInUser().getUsername());
         creatDirectoryIfNotExist(profileImagesPath.toString());
         String imagePath = profileImagesPath + File.separator + System.currentTimeMillis() + file.getOriginalFilename();
         return Image.builder().isCurrentProfileImage(true).path(processSingleImage(file, imagePath)).build();
     }
 
 
-    public void uploadApartmentImages(MultipartFile[] imagesList, Apartment apartment) {
+    public void uploadApartmentImages(MultipartFile[] imagesList, ApartmentDto apartment, User user) {
         StringBuilder apartmentImagesPath = new StringBuilder()
                 .append(Constants.generalImagesPath)
                 .append("apartmentImages")
-                .append(File.separator)
-                .append(userDetailsService.username())
+                .append(Constants.separator)
+                .append(user.getUsername())
                 .append(apartment.getId());
         creatDirectoryIfNotExist(apartmentImagesPath.toString());
         processImagesListAsync(imagesList, apartmentImagesPath.toString(), apartment);
     }
 
     @SneakyThrows
-    private void processImagesListAsync(MultipartFile[] imagesList, String apartmentPath, Apartment apartment) {
+    private void processImagesListAsync(MultipartFile[] imagesList, String apartmentPath, ApartmentDto apartment) {
 
         MultipartFile[] partOne = Arrays.copyOfRange(imagesList, 0, 21);
         MultipartFile[] partTwo = Arrays.copyOfRange(imagesList, 21, 42);
@@ -139,7 +140,7 @@ public class ImageService extends BaseService<Long, Image, ImageDto> {
     }
 
     private void processListOfImages(MultipartFile file, List<String> imagesPaths, String apartmentPath) throws IOException {
-        String imagePath = apartmentPath + File.separator + System.currentTimeMillis() + file.getOriginalFilename();
+        String imagePath = apartmentPath + Constants.separator + System.currentTimeMillis() + file.getOriginalFilename();
         imagesPaths.add(imagePath);
         File convertFile = new File(imagePath);
         FileOutputStream fileOutputStream = new FileOutputStream(convertFile);

@@ -24,12 +24,14 @@ public abstract class BaseService<ID extends Serializable, baseModel extends Bas
     public abstract BaseMapper<ID, baseDto, baseModel> getBaseMapper();
 
 
-    public ResponseEntity<PageResult<ID, baseDto>> findAll(Integer pageNumber, Integer size, String sort) {
+    public ResponseEntity<PageResult<ID, baseDto>> findAll(String pageNumber, String size, String sort) {
         if (sort == null) {
-            Page<baseModel> page = getRepository().findAll(PageRequest.of(pageNumber, size));
+            Page<baseModel> page = getRepository()
+                    .findAll(PageRequest.of(Integer.parseInt(pageNumber), Integer.parseInt(size)));
             return getUnSortedList(page);
         }
-        Page<baseModel> page = getRepository().findAll(PageRequest.of(pageNumber, size, Sort.by(sort).descending()));
+        Page<baseModel> page = getRepository()
+                .findAll(PageRequest.of(Integer.parseInt(pageNumber), Integer.parseInt(size), Sort.by(sort).descending()));
         return getSortedList(page);
     }
 
