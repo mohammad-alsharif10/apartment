@@ -75,10 +75,10 @@ public class ImageService extends BaseService<Long, Image, ImageDto> {
     @SneakyThrows
     private void processImagesListAsync(MultipartFile[] imagesList, String apartmentPath, ApartmentDto apartment) {
 
-        MultipartFile[] partOne = Arrays.copyOfRange(imagesList, 0, 21);
-        MultipartFile[] partTwo = Arrays.copyOfRange(imagesList, 21, 42);
-        MultipartFile[] partThree = Arrays.copyOfRange(imagesList, 42, 63);
-        MultipartFile[] partFour = Arrays.copyOfRange(imagesList, 63, 84);
+        MultipartFile[] partOne = Arrays.copyOfRange(imagesList, 0, 1);
+        MultipartFile[] partTwo = Arrays.copyOfRange(imagesList, 1, 2);
+        MultipartFile[] partThree = Arrays.copyOfRange(imagesList, 2, 3);
+        MultipartFile[] partFour = Arrays.copyOfRange(imagesList, 3, 4);
 
         CompletableFuture<List<String>> completableFuturePartOne = CompletableFuture.supplyAsync(() -> {
             ArrayList<String> paths1 = new ArrayList<>();
