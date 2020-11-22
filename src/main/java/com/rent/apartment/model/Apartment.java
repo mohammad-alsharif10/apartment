@@ -33,7 +33,9 @@ public class Apartment extends BaseModel<Long> {
 
     private String streetName;
 
-    private String blockName;
+    private Integer blockNumber;
+
+    private String governorate;
 
     private String neighborhoodName;
 
@@ -46,6 +48,8 @@ public class Apartment extends BaseModel<Long> {
     private Float latitude;
 
     private Float longitude;
+
+    private Integer numberOfRooms;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id")

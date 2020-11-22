@@ -28,7 +28,9 @@ public class ApartmentDto extends BaseDto<Long> {
 
     private String streetName;
 
-    private String blockName;
+    private Integer blockNumber;
+
+    private String governorate;
 
     private String neighborhoodName;
 
@@ -41,6 +43,8 @@ public class ApartmentDto extends BaseDto<Long> {
     private Float latitude;
 
     private Float longitude;
+
+    private Integer numberOfRooms;
 
     private UserDto user;
 
